@@ -1,5 +1,9 @@
-def main():
-    book_path = "books/frankenstein.txt"
+import sys
+from stats import get_num_words
+
+def main(bookpath):
+    book_path = bookpath
+    # book_path = "books/frankenstein.txt"
     text = get_book_text(book_path)
     num_words = get_num_words(text)
     freq = get_freq(text)
@@ -14,11 +18,8 @@ def main():
     for item in list_of_dicts:
         if not item['key'].isalpha():
             continue
-        print(f"The '{item['key']}' character was found {str(item['nums'])} times")
-
-def get_num_words(text):
-    words = text.split()
-    return len(words)
+        # print(f"The '{item['key']}' character was found {str(item['nums'])} times")
+        print(f"{item['key']}: {item['nums']}")
 
 def get_book_text(path):
     with open(path) as f:
@@ -42,5 +43,8 @@ def chars_dict_to_sorted_list(num_chars_dict):
     sorted_list.sort(reverse=True, key=sort_on)
     return sorted_list
 
-
-main()
+if __name__ == "__main__":
+   if len(sys.argv) < 2:
+       print("Usage: python3 main.py <path_to_book>")
+       sys.exit(1)
+   main(sys.argv[1])
